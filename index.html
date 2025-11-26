@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Barbearia Sale — Agendamentos</title>
+  <meta name="description" content="Agende seu horário na Barbearia Sale. Informações do barbeiro, contato direto e agendamento online." />
+
+  <!-- Estilos -->
+  <style>
+    :root{
+      --accent:#0b6b9a;
+      --muted:#f4f7fb;
+      --card:#ffffff;
+      --text:#222;
+      --soft:#e6eef6;
+      --radius:12px;
+      --max-width:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:var(--text);background:linear-gradient(180deg,#eaf3fb 0%, #ffffff 100%);}
+
+    /* Container (wrapper) */
+    .container{
+      max-width:var(--max-width);
+      margin:28px auto;
+      background:var(--card);
+      border-radius:16px;
+      box-shadow:0 8px 30px rgba(10,30,60,0.12);
+      overflow:hidden;
+      border:6px solid #f0d8b6; /* borda estilo 'moldura' da imagem */
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      min-height:70vh;
+    }
+
+    /* Header / Banner */
+    header.banner{
+      background:linear-gradient(90deg,var(--accent), #2aa1e0);
+      color:white;
+      padding:20px 28px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+    .banner .logo{
+      width:68px;height:68px;border-radius:12px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;
+    }
+    .banner h1{margin:0;font-size:20px}
+    .banner p{margin:0;font-size:13px;opacity:0.95}
+
+    /* Navigation (menu) */
+    nav.menu{
+      background:rgba(255,255,255,0.06);
+      padding:8px 28px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    nav.menu a{
+      color:white;text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;font-size:14px;
+      transition:background .18s, transform .08s;
+    }
+    nav.menu a:hover{background:rgba(255,255,255,0.08);transform:translateY(-2px)}
+
+    /* Main area - sidebar + content */
+    .main{
+      display:grid;
+      grid-template-columns:280px 1fr;
+      gap:20px;
+      padding:20px 28px;
+      align-items:start;
+      background:var(--muted);
+    }
+
+    /* Sidebar */
+    aside.sidebar{
+      background:linear-gradient(180deg,#ffffff,#fbfcff);
+      border-radius:12px;padding:16px;
+      box-shadow:0 6px 18px rgba(10,30,60,0.06);
+      height:fit-content;
+    }
+    .profile{
+      display:flex;gap:12px;align-items:center;margin-bottom:14px;
+    }
+    .avatar{
+      width:72px;height:72px;border-radius:10px;background:linear-gradient(180deg,#ddd,#bbb);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;
+    }
+    .profile h3{margin:0;font-size:16px}
+    .profile p{margin:0;font-size:13px;color:#666}
+
+    .contact-actions{display:flex;gap:8px;margin-top:10px}
+    .contact-actions a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:8px 10px;border-radius:8px;border:1px solid #e6eef6;font-weight:700;font-size:14px;color:var(--accent)}
+    .contact-actions a.tel{background:linear-gradient(#fff,#f8fbff)}
+    .info-list{margin-top:14px;font-size:14px;color:#444;line-height:1.4}
+    .info-list strong{display:block;color:#222;margin-bottom:6px}
+
+    /* Content area */
+    section.content{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+    .card{
+      background:white;border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(15,30,60,0.05);
+    }
+
+    h2.section-title{margin:0 0 8px 0;font-size:18px}
+
+    /* Agendamento form */
+    form#bookingForm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    form .full{grid-column:1/-1}
+    label{display:block;font-size:13px;color:#333;margin-bottom:6px}
+    input[type="text"], input[type="tel"], input[type="email"], select, textarea, input[type="date"], input[type="time"]{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e3eef8;background:#fbfeff;font-size:14px;
+    }
+    textarea{min-height:100px;resize:vertical}
+    .actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+    button.btn{
+      padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:700;cursor:pointer;
+      box-shadow:0 6px 18px rgba(10,90,140,0.12);
+    }
+    button.secondary{background:transparent;border:1px solid #cfe8f6;color:var(--accent);font-weight:700}
+
+    .note{font-size:13px;color:#666}
+
+    /* Sidebar de serviços rápidos */
+    .services-list{display:grid;grid-template-columns:repeat(1,1fr);gap:8px;margin-top:12px}
+    .service{
+      background:linear-gradient(#fff,#fbfdff);padding:10px;border-radius:10px;border:1px solid #f0f6fb;font-size:14px;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+
+    /* Footer */
+    footer.footer{
+      padding:12px 22px;background:linear-gradient(180deg,#fff,#f7fbff);display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555;
+    }
+
+    /* Responsividade */
+    @media (max-width:900px){
+      .main{grid-template-columns:1fr;padding:16px}
+      aside.sidebar{order:2}
+      section.content{order:1}
+      form#bookingForm{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="document" aria-label="Site da Barbearia Sale">
+    <!-- Banner / Header -->
+    <header class="banner" role="banner">
+      <div class="logo" aria-hidden="true">BS</div>
+      <div>
+        <h1>Barbearia Sale</h1>
+        <p>Profissional: João Silva — cortes, barba e estilo</p>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-weight:700">Horário</div>
+        <div style="font-size:13px">Ter–Sáb: 09:00 — 19:00</div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="menu" role="navigation" aria-label="Menu principal">
+      <a href="#agendar">Agendar</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#barbeiro">Sobre o barbeiro</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <!-- Main (sidebar + content) -->
+    <main class="main" role="main">
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-labelledby="sidebarTitle">
+        <div class="profile">
+          <div class="avatar" aria-hidden="true">JS</div>
+          <div>
+            <h3 id="sidebarTitle">João Silva</h3>
+            <p>Barbeiro profissional • 10 anos de experiência</p>
+            <div class="contact-actions" aria-hidden="false">
+              <a class="tel" href="tel:+551199999999">📞 +55 (11) 99999-9999</a>
+              <a href="mailto:joao@barbeariasale.com">✉️ E-mail</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-list" aria-live="polite">
+          <strong>Local:</strong>
+          Rua Exemplo, 123 — Centro, São Paulo
+          <hr style="margin:12px 0;border:none;border-top:1px solid #f0f3f8">
+          <strong>Tempo médio:</strong>
+          Corte: ~45min • Barba: ~30min
+          <hr style="margin:12px 0;border:none;border-top:1px solid #f0f3f8">
+          <strong>Formas de pagamento:</strong>
+          Dinheiro, cartão, Pix
+        </div>
+
+        <div style="margin-top:14px">
+          <h4 style="margin:0 0 8px 0;font-size:15px">Serviços rápidos</h4>
+          <div class="services-list" role="list">
+            <div class="service" role="listitem"><span>Corte tradicional</span><strong>R$ 60</strong></div>
+            <div class="service" role="listitem"><span>Barba</span><strong>R$ 40</strong></div>
+            <div class="service" role="listitem"><span>Corte + Barba</span><strong>R$ 90</strong></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <section class="content">
+        <!-- Agendamento -->
+        <article class="card" id="agendar" aria-labelledby="agendarTitle">
+          <h2 id="agendarTitle" class="section-title">Agende seu horário</h2>
+          <p class="note">Escolha serviço, data e horário. Após o envio, você será informado na tela (exemplo sem backend).</p>
+
+          <form id="bookingForm" aria-describedby="formNote">
+            <label for="clientName">Nome completo</label>
+            <input type="text" id="clientName" name="clientName" placeholder="Seu nome" required>
+
+            <label for="phone">Telefone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(11) 9xxxx-xxxx" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com">
+
+            <label for="service">Serviço</label>
+            <select id="service" name="service" required>
+              <option value="">Selecione...</option>
+              <option value="corte">Corte tradicional — 45min</option>
+              <option value="barba">Barba — 30min</option>
+              <option value="combo">Corte + Barba — 70min</option>
+              <option value="degrade">Degrade — 50min</option>
+            </select>
+
+            <label for="barber">Escolha o barbeiro</label>
+            <select id="barber" name="barber" required>
+              <option value="joao">João Silva (proprietário)</option>
+              <option value="maria">Lucas — especialista em fades</option>
+            </select>
+
+            <label for="date">Data</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Horário</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="notes" class="full">Observações</label>
+            <textarea id="notes" name="notes" class="full" placeholder="Ex.: preferência por navalha, alergias, etc."></textarea>
+
+            <div class="actions full" style="justify-content:space-between;align-items:center">
+              <div>
+                <button type="submit" class="btn">Confirmar agendamento</button>
+                <button type="button" class="secondary" id="clearBtn">Limpar</button>
+              </div>
+              <div id="status" role="status" aria-live="polite" style="font-size:13px;color:#2b6b94"></div>
+            </div>
+          </form>
+        </article>
+
+        <!-- Sobre o barbeiro / detalhes -->
+        <article class="card" id="barbeiro" aria-labelledby="barbeiroTitle">
+          <h2 id="barbeiroTitle" class="section-title">Sobre o barbeiro</h2>
+          <p>João Silva é barbeiro profissional com 10 anos de experiência. Focado em cortes clássicos e modernos, atendimento personalizado e acabamento com navalha.</p>
+
+          <h3 style="margin-top:10px">Especialidades</h3>
+          <ul>
+            <li>Degrades e fades</li>
+            <li>Barba com navalha</li>
+            <li>Tratamentos e produtos masculinos</li>
+          </ul>
+        </article>
+
+        <!-- Contato -->
+        <article class="card" id="contato" aria-labelledby="contatoTitle">
+          <h2 id="contatoTitle" class="section-title">Contato direto</h2>
+          <p>Entre em contato direto com o barbeiro para dúvidas rápidas ou atendimento humano.</p>
+          <p><strong>Telefone:</strong> <a href="tel:+551199999999">+55 (11) 99999-9999</a></p>
+          <p><strong>E-mail:</strong> <a href="mailto:joao@barbeariasale.com">joao@barbeariasale.com</a></p>
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/5511999999999" target="_blank" rel="noopener">Abrir conversa</a></p>
+
+          <div style="margin-top:10px">
+            <h4>Localização</h4>
+            <p>Rua Exemplo, 123 — Centro, São Paulo</p>
+            <!-- Aqui poderia entrar um iframe do Google Maps caso queira -->
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div>© <span id="year"></span> Barbearia Sale — Contato: +55 (11) 99999-9999</div>
+      <div style="font-size:12px;color:#777">Desenvolvido com carinho • Política de privacidade</div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    (function(){
+      // Atualiza ano no rodapé
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const form = document.getElementById('bookingForm');
+      const status = document.getElementById('status');
+      const clearBtn = document.getElementById('clearBtn');
+
+      // Limpa formulário
+      clearBtn.addEventListener('click', () => {
+        form.reset();
+        status.textContent = '';
+      });
+
+      // Validação simples e "envio"
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        status.style.color = '#2b6b94';
+        status.textContent = 'Enviando agendamento...';
+
+        // Ler dados
+        const data = {
+          nome: form.clientName.value.trim(),
+          telefone: form.phone.value.trim(),
+          email: form.email.value.trim(),
+          servico: form.service.value,
+          barbeiro: form.barber.value,
+          data: form.date.value,
+          hora: form.time.value,
+          observacoes: form.notes.value.trim()
+        };
+
+        // Validações básicas
+        if(!data.nome || !data.telefone || !data.servico || !data.data || !data.hora){
+          status.style.color = '#b02a37';
+          status.textContent = 'Por favor, preencha os campos obrigatórios.';
+          return;
+        }
+
+        // Aqui você pode integrar com seu backend (ex.: POST /api/agendamentos)
+        // Exemplo (fetch):
+        //
+        // fetch('/api/agendamentos', {
+        //   method: 'POST',
+        //   headers:{'Content-Type':'application/json'},
+        //   body: JSON.stringify(data)
+        // }).then(r => r.json()).then(res => { ... })
+        //
+        // Como exemplo funcional sem backend, mostramos uma confirmação local:
+
+        setTimeout(() => {
+          status.style.color = '#14789b';
+          status.textContent = 'Agendamento confirmado para ' + data.data + ' às ' + data.hora + '. Nós entraremos em contato.';
+          // opcional: limpar formulário
+          form.reset();
+        }, 900);
+      });
+
+      // Pequena melhoria: limitar datas futuras (por exemplo: hoje até +60 dias)
+      (function limitDate(){
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth()+1).padStart(2,'0');
+        const dd = String(today.getDate()).padStart(2,'0');
+        const min = yyyy+'-'+mm+'-'+dd;
+        const maxDate = new Date();
+        maxDate.setDate(maxDate.getDate()+60);
+        const my = maxDate.getFullYear();
+        const mm2 = String(maxDate.getMonth()+1).padStart(2,'0');
+        const dd2 = String(maxDate.getDate()).padStart(2,'0');
+        const max = my+'-'+mm2+'-'+dd2;
+        dateInput.setAttribute('min', min);
+        dateInput.setAttribute('max', max);
+      })();
+
+    })();
+  </script>
+</body>
+</html>
