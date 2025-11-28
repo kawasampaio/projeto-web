@@ -1,0 +1,196 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background: #0d0d0f;
+    color: #eee;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    width: 100%;
+    padding: 15px 40px;
+    background: #111114;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+}
+
+.navbar a {
+    margin-right: 15px;
+    color: #cfcfcf;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+.logo {
+    width: 40px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right button {
+    margin-left: 10px;
+    background: #222;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.nav-right button:hover {
+    opacity: .8;
+}
+
+/* ===== LAYOUT ===== */
+.layout {
+    width: 95%;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 25px;
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: #141418;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #1f1f24;
+}
+
+/* ===== HEADER BARBEARIA ===== */
+.barber-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.barber-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.barber-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background: #222;
+    object-fit: cover;
+}
+
+.rating {
+    color: #ffc14a;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.agendar-btn {
+    background: #ff7b00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.agendar-btn:hover {
+    opacity: .85;
+}
+
+/* ===== BANNER ===== */
+.banner img {
+    width: 50%;
+    border-radius: 8px;
+}
+
+/* ===== SERVIÇOS ===== */
+.services h2 {
+    margin-bottom: 15px;
+}
+
+.search {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1d;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.service-item {
+    background: #1a1a1d;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #222;
+}
+
+.service-left h3 {
+    font-size: 17px;
+}
+
+.service-left span {
+    font-size: 13px;
+    opacity: .6;
+}
+
+.price {
+    font-weight: bold;
+    color: #32c86e;
+}
+
+.btn-agendar {
+    padding: 8px 12px;
+    background: #0066ff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-agendar:hover {
+    opacity: .85;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar .card {
+    margin-bottom: 20px;
+}
+
+.hours li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #1b1b21;
+    font-size: 14px;
+}
+
+.tag {
+    background: #222;
+    padding: 6px 12px;
+    border-radius: 8px;
+    margin: 2px;
+    font-size: 13px;
+}
